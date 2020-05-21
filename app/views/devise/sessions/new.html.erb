@@ -1,0 +1,26 @@
+<div class="user-box">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="input-name">
+        <%= f.label :email %>
+    </div>
+    <div class="input-box">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+    <div class="input-name">
+        <%= f.label :password %>
+    </div>
+    <div class="input-box">
+        <%= f.password_field :password, autocomplete: "current-password" %>
+    </div>
+    <div class="sent-box">
+        <div class="sent-text">
+            <%= f.submit "ログイン" %>
+        </div>
+    </div>
+  <% end %>
+    <div class="sent-box">
+        <div class="sent-text">
+            <%= render "devise/shared/links" %>
+        </div>
+    </div>
+</div>

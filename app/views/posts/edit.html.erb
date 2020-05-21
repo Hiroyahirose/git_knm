@@ -1,0 +1,15 @@
+<div class="contents">
+    <div class="post-form">
+        <%= form_tag("/posts/#{@post.id}", method: :patch) do %>
+            <div class="form-name">
+                編集する
+            </div>
+            <div class="textarea">
+                <textarea name="text" placeholder="テキスト"><%= @post.text %></textarea>
+            </div>
+            <div class="post-button">
+                <input type="submit" value="投稿">
+            </div>
+        <% end %>
+    </div>
+</div>

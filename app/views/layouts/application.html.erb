@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>航空券の森</title>
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css"/>
+        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+        <!--<link rel="stylesheet" href="application.css" type="text/css" />-->
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+        <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+        <%= csrf_meta_tags %>
+        <script type="text/javascript">
+          WebFontConfig = {
+            google: { families: [ 'Unica+One::latin' ] }
+          };
+          (function() {
+            var wf = document.createElement('script');
+            wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+              '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+            wf.type = 'text/javascript';
+            wf.async = 'true';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(wf, s);
+          })();
+        </script>
+    </head>
+
+  <body>
+    <div class="header">
+      <div class="site-title">
+          <a href="/">航空券の森</a>
+      </div>
+      <% if user_signed_in? %>
+        <div class="user-name">
+            <a href="/users/<%= current_user.id %>"><%= current_user.nickname %></a>
+        </div>
+        <div class="logout">
+            <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+        </div>
+      <% else %>
+        <div class="user-name">
+            <%= link_to "ログイン", new_user_session_path %>
+        </div>
+        <div class="logout">
+            <%= link_to "新規登録", new_user_registration_path %>
+        </div>
+      <% end %>
+    </div>
+    <%= yield %>
+    <div class="footer">
+            Copyright 航空券の森 2020.
+    </div>
+  </body>
+</html>

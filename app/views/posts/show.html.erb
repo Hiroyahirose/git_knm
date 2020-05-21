@@ -1,0 +1,91 @@
+<div class="contents">
+    <div class="show-article">
+        <div class="article-info">
+            <div class="article-name">
+                <a href="/users/<%= @post.user_id %>">
+                    <%= @post.user.nickname %>
+                </a>
+            </div>
+            <div class="article-date">
+                <%= Time.at(@post.created_at.to_i).in_time_zone('Tokyo').to_date %>
+            </div>
+            <div class="article-menu">
+                <% if user_signed_in? && current_user.id == @post.user_id %>
+                    <div class="menu-title">
+                        ▼
+                    </div>
+                    <div class="sub-menu">
+                            <ul>
+                                <li>
+                                    <%= link_to '編集', "/posts/#{@post.id}/edit", method: :get %>
+                                </li>
+                                <li>
+                                    <%= link_to '削除', "/posts/#{@post.id}", method: :delete %>
+                                </li>
+                            </ul>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+        <div class="article-text">
+            <p>
+                <%= simple_format(@post.text) %> 
+            </p>
+        </div>
+    </div>
+    <div class="comments-box">
+        <div class="title">
+            コメント
+        </div>
+        <div class="comment">
+            <% if @comments %>
+                <% @comments.each do |comment| %>
+                    <div class="comment-info">
+                        <div class="comment-name">
+                            <a href="/users/<%= comment.user_id %>">
+                                <%= comment.user.nickname %>
+                            </a>
+                        </div>
+                        <div class="comment-date">
+                            <%= Time.at(comment.created_at.to_i).in_time_zone('Tokyo').to_date %>
+                        </div>
+                        <div class="comment-menu">
+                            <% if user_signed_in? && current_user.id == comment.user_id %>
+                                <div class="menu-title">
+                                    ▼
+                                </div>
+                                <div class="sub-menu">
+                                    <ul>
+                                        <li>
+                                            <%= link_to '削除', "/posts/#{@post.id}/comments/#{comment.id}", method: :delete %>
+                                        </li>
+                                    </ul>
+                                </div>
+                            <% end %>
+                        </div>
+                    </div>
+                    <div class="comment-text">
+                        <p>
+                            <%= simple_format(comment.text) %>
+                        </p>
+                    </div>
+                <% end %>
+            <% end %>
+        </div>
+        <%= form_tag("/posts/#{@post.id}/comments", method: :post) do %>
+            <div class="comment-textarea">
+                <textarea name="text" placeholder="テキスト"></textarea>
+            </div>
+            <div class="comment-button">
+                <% if user_signed_in? %>
+                    <input type="submit" value="コメント">
+                <% else %>
+                    <%= link_to "ログインしてコメント", new_user_session_path %>
+                <% end %>
+            </div>
+        <% end %>
+    </div>
+    <% if user_signed_in? %>
+        <%= render partial: "button" %>
+    <% end %>
+</div>

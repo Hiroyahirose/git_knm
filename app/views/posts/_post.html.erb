@@ -1,0 +1,19 @@
+<div class="article">
+    <div class="article-info">
+        <div class="article-name">
+            <a href="/users/<%= post.user_id %>">
+                <%= post.user.nickname %>
+            </a>
+        </div>
+        <div class="article-date">
+            <%= Time.at(post.created_at.to_i).in_time_zone('Tokyo').to_date %>
+        </div>
+    </div>
+    <div class="article-text">
+        <a href="/posts/<%= post.id %>">
+            <p>
+                <%= simple_format(post.text) %> 
+            </p>
+        </a>
+    </div>
+</div>
